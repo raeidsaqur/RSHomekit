@@ -331,6 +331,24 @@ static BOOL showFullDepthDescription = NO;
     return descriptionString;
 }
 
++ (NSArray <HMService *> *)getFilteredServicesUnderHome:(HMHome *)home
+                                         ofServiceTypes:(NSArray<NSString *> *)serviceTypes
+                                     byManufacturerName:(NSString *)manufacturer {
+    
+    if (!home || !manufacturer || !serviceTypes || (serviceTypes.count == 0)) { return nil; }
+    NSMutableArray<HMService *> * services = [home servicesWithTypes:serviceTypes].mutableCopy;
+    
+    for (HMService *service in services) {
+        NSString *manufacturerName = [HomeKitUtility getManufacturerNameForHMAccessory:service.accessory];
+        if (manufacturerName && ![manufacturerName isEqualToString:manufacturer]) {
+            [services removeObject:service];
+        }
+    }
+    
+    return [NSArray arrayWithArray:services];
+}
+
+
 
 #pragma mark - Non-HomeKit Helpers -
 + (void)openSettings {

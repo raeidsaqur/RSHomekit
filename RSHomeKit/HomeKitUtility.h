@@ -60,4 +60,8 @@
 
 + (NSString *)convertDataToString:(NSData *)data;
 
++ (NSArray <HMService *> *)getFilteredServicesUnderHome:(HMHome *)home
+                                         ofServiceTypes:(NSArray<NSString *>  *)serviceTypes
+                                     byManufacturerName:(NSString *)manufacturer;
+
 @end
